@@ -1,5 +1,16 @@
 {
+    "name": "dbugit/owncloud-php-interface",
+    "description": "ownCloud PHP interface, for managing users and files/shares",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Adriano Pedro",
+            "email": "adrianopedro@gmail.com"
+        }
+    ],
     "require": {
+        "php": ">=5.4.0",
         "php-curl-class/php-curl-class": "dev-master"       
     },
      "autoload": {
