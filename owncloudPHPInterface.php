@@ -9,7 +9,7 @@ use Curl\Curl;
 require __DIR__ . '/vendor/autoload.php';
 
 
-class OCInterface {
+class owncloudPHPInterface {
 	
 	/** @var string Administrator username for owncloud authentication **/ 
 	protected $adminUsername = '';
