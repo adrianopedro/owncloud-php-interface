@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php-curl-class/php-curl-class": "dev-master"       
+    },
+     "autoload": {
+         "psr-4": {
+            "Curl\\": "src/"
+        }
+    }
+}
