@@ -24,6 +24,10 @@ class owncloudPHPInterface {
 	
 	protected $curl;
 	
+	protected $ocsv1_prefix 	= '/ocs/v1.php/cloud';
+	protected $ocsv2_prefix 	= '/ocs/v2.php/cloud';
+	protected $ocsshare_prefix 	= '/ocs/v1.php/apps/files_sharing/api/v1';
+	
 	public function __construct($url, $adminUsername, $adminPassword){
 			$this->setAdmin($adminUsername, $adminPassword);
 			$this->setURL($url);
@@ -59,10 +63,22 @@ class owncloudPHPInterface {
 	/*************
 	 ** ACTIONS **
 	 ************/	
+	public function getAllUsers(){
+		if($this->curl){
+			$this->curl->get($this->url.$this->ocsv2_prefix."/users");
+			$resp = $this->curl->response;
+		} else $resp = 'No curl connection...';
+		
+		return $resp;
+	}
 	
+	/**
+	 * 
+	 * @param unknown $userid
+	 */
 	public function getUser($userid = null){	
 		if($this->curl && $userid){
-			$this->curl->get($this->url."/users/$userid");
+			$this->curl->get($this->url.$this->ocsv2_prefix."/users/$userid");
 			$resp = $this->curl->response;
 		} else $resp = 'No curl connection...';
 		
@@ -76,7 +92,7 @@ class owncloudPHPInterface {
 	 */
 	public function createUser($userdata = null){
 		if($this->curl && $userdata){
-			$this->curl->post($this->url."/users", $userdata);				
+			$this->curl->post($this->url.$this->ocsv2_prefix."/users", $userdata);				
 			$resp = $this->curl->response;
 		} else $resp = 'No curl connection...';
 		
@@ -88,7 +104,7 @@ class owncloudPHPInterface {
 	 */
 	public function deleteUser($userid = null){
 		if($this->curl && $userid){
-			$this->curl->delete($this->url."/users/$userid");
+			$this->curl->delete($this->url.$this->ocsv2_prefix."/users/$userid");
 			$resp = $this->curl->response;
 		} else $resp = 'No curl connection...';
 		
@@ -103,16 +119,63 @@ class owncloudPHPInterface {
 	 */
 	public function updateUser($userid = null, $userdata = null){
 		if($this->curl){
-			$this->curl->put($this->url."/users/".$this->userid, $this->userdata);
+			$this->curl->put($this->url.$this->ocsv2_prefix."/users/".$this->userid, $this->userdata);
 			$resp = $this->curl->response;
 		} else $resp = 'No curl connection...';
 		
 		return $resp;
 	}
 	
+	/**
+	 * 
+	 * @param string $path
+	 * @return string
+	 */
+	function getShares($path = ''){
+		if($this->curl){
+			$this->curl->get($this->url.$this->ocsshare_prefix."/shares".$path);
+			$resp = $this->curl->response;
+		} else $resp = 'No curl connection...';
+		
+		return $resp;
+	}
+	
+	/**
+	 * 
+	 * @param unknown $shareid
+	 * @return string
+	 */
+	function getShareByShareID($shareid = null){
+		if($this->curl){
+			$this->curl->get($this->url.$this->ocsshare_prefix."/shares/".$shareid);
+			$resp = $this->curl->response;
+		} else $resp = 'No curl connection...';
+	
+		return $resp;
+	}
+	
+	/**
+	 * 
+	 * @param unknown $shareid
+	 * @return string
+	 */
+	function deleteShare($shareid = null){
+		if($this->curl){
+			$this->curl->delete($this->url.$this->ocsshare_prefix."/shares/".$shareid);
+			$resp = $this->curl->response;
+		} else $resp = 'No curl connection...';
+	
+		return $resp;
+	}
+	
+	/**
+	 * 
+	 * @param unknown $data
+	 * @return string
+	 */
 	public function shareContent($data){
 		if($this->curl){			
-			$this->curl->post($this->url."/shares", $data);
+			$this->curl->post($this->url.$this->ocsshare_prefix."/shares", $data);
 			$resp = $this->curl->response;
 		} else $resp = 'No curl connection...';
 		
