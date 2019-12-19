@@ -15,7 +15,17 @@
     },
      "autoload": {
          "psr-4": {
-            "Curl\\": "src/"
+            "DBugIT\\OCInterface\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            // "providers": [
+            //     "Stevebauman\\Location\\LocationServiceProvider"
+            // ],
+            "aliases": {
+                "Location": "DBugIT\\OCInterface\\OCInterface"
+            }
         }
     }
 }
