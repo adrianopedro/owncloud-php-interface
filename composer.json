@@ -20,9 +20,6 @@
     },
     "extra": {
         "laravel": {
-            // "providers": [
-            //     "Stevebauman\\Location\\LocationServiceProvider"
-            // ],
             "aliases": {
                 "OCInterface": "DBugIT\\OCInterface\\OCInterface"
             }
