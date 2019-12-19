@@ -24,7 +24,7 @@
             //     "Stevebauman\\Location\\LocationServiceProvider"
             // ],
             "aliases": {
-                "Location": "DBugIT\\OCInterface\\OCInterface"
+                "OCInterface": "DBugIT\\OCInterface\\OCInterface"
             }
         }
     }
