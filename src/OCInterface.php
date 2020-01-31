@@ -93,6 +93,10 @@ class OCInterface {
 		return $resp;
 	}
 	
+	/************
+	 ** GROUPS **
+	 ***********/
+
 	/**
 	 * 
 	 * @param unknown $userid
@@ -133,10 +137,12 @@ class OCInterface {
 	 * @return string
 	 */
 	public function updateUser(){
+		$resp = [];
 		if($this->client){
 			foreach($this->userdata as $key => $value){
 				$this->headers["form_params"] = ["key" => $key, "value" => $value];
-				$resp [] = $this->client->request("PUT",$this->ocsv1_prefix."/users/".$this->userid, $this->headers);
+				$r = $this->client->put($this->ocsv1_prefix."/users/".$this->userid, $this->headers);
+				$resp[] = simplexml_load_string($r->getBody()->getContents());
 			}
 		} else {
 			$resp = 'No curl connection...';
@@ -186,8 +192,43 @@ class OCInterface {
 		return $resp;
 	}
 
+	public function getUserGroups($userid = null){	
+		if($this->client && $userid){
+			$resp = $this->client->get($this->ocsv1_prefix."/users/$userid/groups", $this->headers);
+			$resp = simplexml_load_string($resp->getBody()->getContents());
+		} else $resp = 'No curl connection...';
+		
+		return $resp;
+	}
 
+	public function setUserGroups($userid = null){
+		if($this->client && $userid){
+			foreach((array)$this->getGroups()->data->groups->element as $group){
+				$this->headers["form_params"] 	= [ "groupid" => $group ];
+				$resp = $this->client->delete($this->ocsv1_prefix."/users/$userid/groups", $this->headers);
+				$resp = simplexml_load_string($resp->getBody()->getContents());
+			}
+			foreach($this->userdata['usergroups'] as $group){
+				$this->headers["form_params"] 	= [ "groupid" => $group ];
+				$resp = $this->client->post($this->ocsv1_prefix."/users/$userid/groups", $this->headers);
+				$resp = simplexml_load_string($resp->getBody()->getContents());
+			}
+		} else $resp = 'No curl connection...';
+		
+		return $resp;
+	}
 
+	public function removeUserGroups($userid = null){
+		if($this->client && $userid){
+			foreach($this->userdata['usergroups'] as $group){
+				$this->headers["form_params"] 	= [ "groupid" => $group ];
+				$resp = $this->client->delete($this->ocsv1_prefix."/users/$userid/groups", $this->headers);
+				$resp = simplexml_load_string($resp->getBody()->getContents());
+			}
+		} else $resp = 'No curl connection...';
+		
+		return $resp;
+	}
 
 
 
