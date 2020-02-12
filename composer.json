@@ -1,5 +1,5 @@
 {
-    "name": "dbugit/owncloud-php-interface",
+    "name": "adrianopedro/owncloud-php-interface",
     "description": "ownCloud PHP interface, for managing users and files/shares",
     "license": "MIT",
     "type": "library",
@@ -15,13 +15,13 @@
     },
      "autoload": {
          "psr-4": {
-            "DBugIT\\OCInterface\\": "src/"
+            "AdrianoPedro\\OCInterface\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "aliases": {
-                "OCInterface": "DBugIT\\OCInterface\\OCInterface"
+                "OCInterface": "AdrianoPedro\\OCInterface\\OCInterface"
             }
         }
     }

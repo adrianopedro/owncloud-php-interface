@@ -1,5 +1,5 @@
 <?php
-namespace DBugIT\OCInterface;
+namespace AdrianoPedro\OCInterface;
 
 use GuzzleHttp\Client;
 use Curl\Curl;
